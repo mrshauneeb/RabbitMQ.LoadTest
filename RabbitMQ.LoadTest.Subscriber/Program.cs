@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Configuration;
 using System.Threading;
 using System.Threading.Tasks;
@@ -42,11 +43,55 @@ namespace RabbitMQ.LoadTest.Subscriber
 
         protected static void Subscribe(string host, ushort port, string vhost, string username, string password, string threadno, CancellationToken token)
         {
+            var messages = new List<object>(10);
+            messages.Add(new XMLMessage0());
+            messages.Add(new XMLMessage1());
+            messages.Add(new XMLMessage2());
+            messages.Add(new XMLMessage3());
+            messages.Add(new XMLMessage4());
+            messages.Add(new XMLMessage5());
+            messages.Add(new XMLMessage6());
+            messages.Add(new XMLMessage7());
+            messages.Add(new XMLMessage8());
+            messages.Add(new XMLMessage9());
+
             using (var bus = RabbitHutch.CreateBus(host, port, vhost, username, password, 3, serviceRegister => serviceRegister.Register<IEasyNetQLogger>(serviceProvider => new NullLogger())))
             {
                 int counter = 0;
 
-                bus.Subscribe<XMLMessage>("XML_subscriber", message => outputtoconsole(message.XMLString, counter++, threadno));
+                switch (Convert.ToInt32(threadno))
+                {
+                    case 0:
+                        bus.Subscribe<XMLMessage0>("XML_subscriber0", message => outputtoconsole(message.XMLString, counter++, threadno));
+                        break;
+                    case 1:
+                        bus.Subscribe<XMLMessage1>("XML_subscriber1", message => outputtoconsole(message.XMLString, counter++, threadno));
+                        break;
+                    case 2:
+                        bus.Subscribe<XMLMessage2>("XML_subscriber2", message => outputtoconsole(message.XMLString, counter++, threadno));
+                        break;
+                    case 3:
+                        bus.Subscribe<XMLMessage3>("XML_subscriber3", message => outputtoconsole(message.XMLString, counter++, threadno));
+                        break;
+                    case 4:
+                        bus.Subscribe<XMLMessage4>("XML_subscriber4", message => outputtoconsole(message.XMLString, counter++, threadno));
+                        break;
+                    case 5:
+                        bus.Subscribe<XMLMessage5>("XML_subscriber5", message => outputtoconsole(message.XMLString, counter++, threadno));
+                        break;
+                    case 6:
+                        bus.Subscribe<XMLMessage6>("XML_subscriber6", message => outputtoconsole(message.XMLString, counter++, threadno));
+                        break;
+                    case 7:
+                        bus.Subscribe<XMLMessage7>("XML_subscriber7", message => outputtoconsole(message.XMLString, counter++, threadno));
+                        break;
+                    case 8:
+                        bus.Subscribe<XMLMessage8>("XML_subscriber8", message => outputtoconsole(message.XMLString, counter++, threadno));
+                        break;
+                    case 9:
+                        bus.Subscribe<XMLMessage9>("XML_subscriber9", message => outputtoconsole(message.XMLString, counter++, threadno));
+                        break;
+                }
 
                 while (!token.IsCancellationRequested)
                 {

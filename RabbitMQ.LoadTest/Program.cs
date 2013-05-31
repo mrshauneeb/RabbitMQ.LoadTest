@@ -60,12 +60,44 @@ namespace RabbitMQ.LoadTest
                             if (rnd.Next(100) <= 80 && !token.IsCancellationRequested)
                             {
                                 string contents = File.ReadAllText(file);
-                                channel.Publish(new XMLMessage { XMLString = contents });
+
+                                switch (Convert.ToInt32(ThreadNo))
+                                {
+                                    case 0:
+                                        channel.Publish(new XMLMessage0 { XMLString = contents });
+                                        break;
+                                    case 1:
+                                        channel.Publish(new XMLMessage1 { XMLString = contents });
+                                        break;
+                                    case 2:
+                                        channel.Publish(new XMLMessage2 { XMLString = contents });
+                                        break;
+                                    case 3:
+                                        channel.Publish(new XMLMessage3 { XMLString = contents });
+                                        break;
+                                    case 4:
+                                        channel.Publish(new XMLMessage4 { XMLString = contents });
+                                        break;
+                                    case 5:
+                                        channel.Publish(new XMLMessage5 { XMLString = contents });
+                                        break;
+                                    case 6:
+                                        channel.Publish(new XMLMessage6 { XMLString = contents });
+                                        break;
+                                    case 7:
+                                        channel.Publish(new XMLMessage7 { XMLString = contents });
+                                        break;
+                                    case 8:
+                                        channel.Publish(new XMLMessage8 { XMLString = contents });
+                                        break;
+                                    case 9:
+                                        channel.Publish(new XMLMessage9 { XMLString = contents });
+                                        break;
+                                }
                                 counter++;
                                 if (counter % 100 == 0)
                                     Console.WriteLine(ThreadNo.ToString() + " - " + counter.ToString());
                             }
-
                         }
                     }
 
