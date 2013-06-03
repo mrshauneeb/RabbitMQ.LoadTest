@@ -59,7 +59,7 @@ namespace RabbitMQ.LoadTest.Subscriber
             {
                 int counter = 0;
 
-                switch (Convert.ToInt32(threadno))
+                switch (Convert.ToInt32(threadno) % 10)
                 {
                     case 0:
                         bus.Subscribe<XMLMessage0>("XML_subscriber0", message => outputtoconsole(message.XMLString, counter++, threadno));
@@ -96,6 +96,7 @@ namespace RabbitMQ.LoadTest.Subscriber
                 while (!token.IsCancellationRequested)
                 {
                     //Wait until cancel signal is sent.
+                    Thread.Sleep(500);
                 }
                 Console.WriteLine("Thread {0} stopped", threadno);
             }
